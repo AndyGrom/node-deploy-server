@@ -1,0 +1,17 @@
+{
+    "name" : "node-deploy-server",
+	"description" : "Web service for deploy and run node.js applications",
+    "version" : "1.0.0",
+    "author" : "Gromozdov Andrey Alexandrovich",
+    "main" : "node-deploy-server.js",
+	"repository" : {
+		"git" : ""
+	},
+    "dependencies" : {
+        "express" : "*",
+        "tar" : "*",
+		"tmp" : "*",
+        "fstream" : "*",
+        "forever-monitor" : "*"
+    }
+}
