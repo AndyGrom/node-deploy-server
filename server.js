@@ -16,7 +16,7 @@ appConfig.init(function(err, config) {
 });
 
 function start(config){
-    var processManager = new ProcessManager(config.applications);
+    var processManager = new ProcessManager(config.apps);
     processManager.startAll(function(){
 
         var http = require('http');
@@ -24,17 +24,21 @@ function start(config){
         var server = express();
 
         server.use(express.logger('dev'));
-        server.use(express.static(path.join(__dirname, 'static')));
         server.use(express.bodyParser());
+
+        server.get('/', function(req, res){
+            res.send(200, 'server ready');
+        });
 
         server.post('/deploy/:appName', function(req, res){
             var appName = req.params.appName;
             var found = false;
-            for(var app in config.applications) {
+            var applications = config.apps.apps;
+            for(var app in applications) {
                 if (app === appName) {
                     found = true;
                     var file = req.files.file;
-                    var target = config.applications[app].path;
+                    var target = applications[app].path;
                     var module = {
                         name : appName
                     }

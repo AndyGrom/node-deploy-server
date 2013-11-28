@@ -5,7 +5,7 @@
     "author" : "Gromozdov Andrey Alexandrovich",
     "main" : "node-deploy-server.js",
 	"repository" : {
-		"git" : ""
+		"git" : "git://github.com/andygrom/node-deploy-server.git"
 	},
     "dependencies" : {
         "express" : "*",

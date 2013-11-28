@@ -15,8 +15,8 @@ function ProcessManager(applications){
     function startAllProcesses(callback){
 
         var names = [];
-        for(var app in applications) {
-            if (applications.hasOwnProperty(app)){
+        for(var app in applications.apps) {
+            if (applications.apps.hasOwnProperty(app)){
                 names.push(app);
             }
         }

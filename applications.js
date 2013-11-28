@@ -12,7 +12,10 @@ function init(callback) {
         if (err) { return callback(err); }
         try{
             var config = JSON.parse(data);
-            config.applications.find = find;
+            config.apps = {};
+            config.apps.find = find;
+            config.apps.apps = config.applications;
+            delete config.applications;
         } catch(err){
             return callback(err);
         }
@@ -21,10 +24,11 @@ function init(callback) {
 }
 
 function find(name) {
-    for(var app in this) {
-        if (this.hasOwnProperty(app)) {
+    var applications = this.apps;
+    for(var app in applications) {
+        if (applications.hasOwnProperty(app)) {
             if (app === name) {
-                return this[app];
+                return applications[app];
             }
         }
     }
