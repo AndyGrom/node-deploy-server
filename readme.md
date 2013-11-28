@@ -35,3 +35,7 @@ Usages
 	```
 
 Service ready. To deploy application use node-deploy client side (https://github.com/AndyGrom/node-deploy-client)
+
+License
+-------
+MIT. See License.txt file.
