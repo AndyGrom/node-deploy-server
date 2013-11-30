@@ -60,7 +60,7 @@ function start(config){
 
         var httpServer = http.createServer(server);
         httpServer.listen(config.port, function(){
-            debug('node deploy server lunched on: ' + httpServer.address().port);
+            debug('node deploy server launched on port: ' + httpServer.address().port);
         });
     });
 }
