@@ -5,13 +5,21 @@
     "author" : "Gromozdov Andrey Alexandrovich",
     "main" : "node-deploy-server.js",
 	"repository" : {
-		"git" : "git://github.com/andygrom/node-deploy-server.git"
+		"type": "git",
+		"url" : "git://github.com/andygrom/node-deploy-server.git"
 	},
+	"keywords": [
+		"deploy"
+	],	
     "dependencies" : {
         "express" : "*",
         "tar" : "*",
 		"tmp" : "*",
         "fstream" : "*",
         "forever-monitor" : "*"
-    }
+    },
+	"bin" : {
+		"node-deploy-server" : "./bin/node-deploy-server"
+	},
+	"homepage": "https://github.com/AndyGrom/node-deploy-server"
 }

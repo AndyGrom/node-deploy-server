@@ -10,7 +10,7 @@ Usages
 	```bash
 	npm install node-deploy-server -g
 	```
-2. Configuration
+2. Configuration  
    Put into root folder you project "settings.json" file with next content:
 	```javascript
 	{
