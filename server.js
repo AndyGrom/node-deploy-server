@@ -6,7 +6,7 @@
 
 var path = require('path');
 
-var deploy = require('./deploy');
+var plugins = require('./deploy');
 var appConfig = require('./applications');
 var ProcessManager = require('./process-manager');
 var passport = require('passport');
@@ -51,18 +51,18 @@ function start(config){
             for(var app in applications) {
                 if (app === appName) {
                     found = true;
-                    var file = req.files.file;
-                    var target = applications[app].path;
-                    var module = {
-                        name : appName
+                    var options = {
+                        target : applications[app].path,
+                        file : req.files.file,
+                        processManager : processManager,
+                        moduleName : appName,
+                        log : []
                     }
-                    deploy.deployApp(processManager, target, file, module, function(err, data){
-                        if (err) {
-                            res.send(500, err.toString());
-                            return;
-                        }
-                        res.send(data);
-                        return;
+                    plugins.start(options, function(err, data){
+                        var status = 200;
+                        if (err) { status = 500; }
+
+                        return res.send(status, data.log);
                     });
                     break;
                 }

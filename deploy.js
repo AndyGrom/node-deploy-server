@@ -1,69 +1,51 @@
-var os = require('os');
+/**
+ * Author: Andrey Gromozdov
+ * Date: 01.12.13
+ * Time: 21:17
+ */
+
 var path = require('path');
 var fs = require('fs');
-var execFile = require('child_process').execFile;
-var targz = require('./targz');
-var tmp = require('tmp');
-var fstream = require('fstream');
 
-function deployApp(processManager, target, file, module, callback) {
-
-   var targetFolder = path.join(target, module.name);
-   unpack(targetFolder, file, function(err){
-       if (err){ return callback(err); }
-       installDependencies(targetFolder, function(error, stdout){
-           if (error) {
-               return callback(error, stdout);
-           } else {
-               processManager.start(module.name, function(err){
-                   callback(error, stdout);
-               });
-           }
-       });
-   });
-}
-
-function unpack(targetFolder, file, callback){
-    fs.mkdir(targetFolder, function(){
-        tmp.dir(function(err, tmpFolder){
-            if (err){ return callback(err); }
-
-            targz.extract(file.path, tmpFolder, function(err){
-                if (err){ return callback(err); }
-
-                fs.readdir(tmpFolder, function(err, files){
-                    var writer = fstream.Writer(targetFolder);
-                    fstream.Reader(path.join(tmpFolder, files[0])).pipe(writer);
-                    writer.on('error', function(err){
-                        callback(err);
-                    })
-                    writer.on('close', function(){
-                        fs.unlink(file.path, function(){
-                            callback(null);
-                        });
-                    });
+function plugins(options, callback) {
+    readPlugins(function(pluginList){
+        var current = -1;
+        (function runPlugin(data, callback) {
+            current++;
+            if (current < pluginList.length) {
+                pluginList[current](data, function(err, options){
+                    if (err) {
+                        return callback(err, options);
+                    } else {
+                        runPlugin(options, callback);
+                    }
                 });
-            });
-        });
-    });
-}
-
-function installDependencies(folder, callback){
-    fs.exists(path.join(folder, 'package.json'), function(exists){
-        if (exists) {
-            var command = 'npm';
-            if (/win/.test(os.platform())){
-                command = "npm.cmd";
+            } else {
+                callback(null, options);
             }
-
-            var params = ["install"];
-            execFile(command, params, {cwd : folder}, function(error, stdout, stderr){
-                callback(error, stdout);
-            });
-        } else {
-            callback();
-        }
+        }(options, callback));
     });
 }
 
-exports.deployApp = deployApp;
+var pluginList = [];
+function readPlugins(callback){
+    if (pluginList.length > 0) {
+        process.nextTick(function(){
+            callback(pluginList);
+        });
+    } else {
+        var pluginOptions = path.join(__dirname, 'plugins.json');
+        var data = fs.readFileSync(pluginOptions);
+
+        var pluginFiles = JSON.parse(data);
+
+        for(var i = 0; i < pluginFiles.length; i++) {
+            var plugin = require(pluginFiles[i]).plugin;
+            pluginList.push(plugin);
+        }
+        return {start : plugins };
+    }
+}
+
+module.exports = readPlugins(null);
+

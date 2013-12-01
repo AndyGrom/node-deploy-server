@@ -1,0 +1,5 @@
+[
+    "./plugins/unpack",
+    "./plugins/installDependencies",
+    "./plugins/startProcess"
+]
