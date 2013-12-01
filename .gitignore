@@ -228,3 +228,6 @@ results
 build
 
 node_modules
+
+.idea
+publish.cmd

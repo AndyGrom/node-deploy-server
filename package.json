@@ -16,7 +16,9 @@
         "tar" : "*",
 		"tmp" : "*",
         "fstream" : "*",
-        "forever-monitor" : "*"
+        "forever-monitor" : "*",
+        "passport" : "*",
+        "passport-http" : "*"
     },
 	"bin" : {
 		"node-deploy-server" : "./bin/node-deploy-server"
