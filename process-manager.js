@@ -7,21 +7,21 @@
 var forever = require('forever-monitor');
 var path = require('path');
 var fs = require('fs');
+var apps = require('./applications');
 
-function ProcessManager(applications){
-    var applications = applications;
+function ProcessManager(){
+    var applications = apps.config.applications;
     var processes = {};
 
     function startAllProcesses(callback){
 
         var names = [];
-        for(var app in applications.apps) {
-            if (applications.apps.hasOwnProperty(app)){
-                names.push(app);
-            }
+        for(var app in applications) {
+            names.push(app);
         }
 
         function next(name, callback) {
+            var app = apps.find(name);
             startProcess(name, function(){
                 callback();
             });
@@ -38,14 +38,18 @@ function ProcessManager(applications){
     }
 
     function startProcess(name, callback) {
-        var app = applications.find(name);
+        var app = apps.find(name);
         if (app) {
-            if (processes[name]) {
-                stopProcess(name, function(){
+            if (app.plugins && app.plugins.indexOf('./plugins/startProcess') > -1){
+                if (processes[name]) {
+                    stopProcess(name, function(){
+                        runProcess(app, name, callback);
+                    });
+                } else {
                     runProcess(app, name, callback);
-                });
+                }
             } else {
-                runProcess(app, name, callback);
+                callback();
             }
         } else {
             callback();

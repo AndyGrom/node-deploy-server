@@ -6,14 +6,16 @@
 
 var path = require('path');
 var fs = require('fs');
+var config = require('./configuration');
 
 function plugins(options, callback) {
-    readPlugins(function(pluginList){
+    readPlugins(options.moduleName, function(pluginList){
         var current = -1;
         (function runPlugin(data, callback) {
             current++;
             if (current < pluginList.length) {
-                pluginList[current](data, function(err, options){
+                data.log.push('PLUGIN: ' + pluginList[current].name);
+                pluginList[current].plugin(data, function(err, options){
                     if (err) {
                         return callback(err, options);
                     } else {
@@ -27,25 +29,35 @@ function plugins(options, callback) {
     });
 }
 
-var pluginList = [];
-function readPlugins(callback){
-    if (pluginList.length > 0) {
+var pluginList = {};
+function readPlugins(appName, callback){
+    if (appName) {
         process.nextTick(function(){
-            callback(pluginList);
+            callback(pluginList[appName]);
         });
     } else {
-        var pluginOptions = path.join(__dirname, 'plugins.json');
-        var data = fs.readFileSync(pluginOptions);
 
-        var pluginFiles = JSON.parse(data);
+        for (var appName in config.applications) {
+            var pluginFiles = config.applications[appName].plugins;
+            if (!pluginFiles) {
+                pluginFiles = [
+                    "./plugins/unpack",
+                    "./plugins/installDependencies"
+                ];
+            }
 
-        for(var i = 0; i < pluginFiles.length; i++) {
-            var plugin = require(pluginFiles[i]).plugin;
-            pluginList.push(plugin);
+            for(var i = 0; i < pluginFiles.length; i++) {
+                var plugin = require(pluginFiles[i]).plugin;
+                if (!pluginList[appName]) {
+                    pluginList[appName] = [];
+                }
+                pluginList[appName].push( { name: pluginFiles[i], plugin: plugin } );
+            }
         }
+
         return {start : plugins };
     }
 }
 
-module.exports = readPlugins(null);
+module.exports = readPlugins(null, null);
 

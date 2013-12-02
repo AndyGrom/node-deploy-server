@@ -8,7 +8,7 @@ var fs = require('fs');
 var path = require('path');
 
 var tmp = require('tmp');
-var targz = require('../targz');
+var targz = require('../../targz');
 var fstream = require('fstream');
 
 function unpack(options, done){

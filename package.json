@@ -18,7 +18,8 @@
         "fstream" : "*",
         "forever-monitor" : "*",
         "passport" : "*",
-        "passport-http" : "*"
+        "passport-http" : "*",
+        "colors" : "*"
     },
 	"bin" : {
 		"node-deploy-server" : "./bin/node-deploy-server"

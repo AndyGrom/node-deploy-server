@@ -10,31 +10,46 @@ Usages
 	```bash
 	npm install node-deploy-server -g
 	```
-2. Configuration  
-   Put into root folder you project "settings.json" file with next content:
+
+2. Common Configuration
+
+   Create "node-hosting.json" file with next content:
 	```javascript
 	{
 		"port" : 15478,						// service port
 		"username" : "admin",				// username for client application
 		"password" : "admin",				// password for client application
-		"applications" : {					// list you hosted applications
-			"node-deploy-demo" : {			// application name
-				"path" : "/applications",	// root path for application
-				"foreverConfig" : {			// config options for forever-monitor (see https://github.com/nodejitsu/forever-monitor)
+		"applications" : {                  // list of your hosted applications (see below)
+		}
+	}
+	```
+	and put it in a /etc folder or root node-deploy-server module folder.
+
+3. Applications configuration
+    ```javascript
+		"applications" : {                  // list of your hosted applications
+			"node-deploy-demo" : {			// your application name
+				"path" : "/applications",	// root path for deployment application
+
+				"foreverConfig" : {			// *config options for forever-monitor, if corresponding plugin is switched on
 					"cwd" : "/applications/node-deploy-demo" // current working dir for application
-				}
+				},
+				"plugins" : [                             // **extensions to process received file
+                    "./plugins/unpack",                 // unpack archive
+                    "./plugins/installDependencies",    // launch command 'npm install' into root folder
+                    "./plugins/startProcess"            // launch your service by dint of forever-monitor (see <https://github.com/nodejitsu/forever-monitor>)
+				]
 			}
 		}
-	}	
-	```
+    ```
 
-3. Run service
+4. Run service
 
 	```bash
 	node-server-deploy
 	```
 
-Service ready. To deploy application use node-deploy client side (https://github.com/AndyGrom/node-deploy-client)
+Service ready. To deploy application use node-deploy client side <https://github.com/AndyGrom/node-deploy-client>
 
 License
 -------

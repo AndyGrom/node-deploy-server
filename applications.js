@@ -6,43 +6,10 @@
 
 var path = require('path');
 var fs = require('fs');
-
-function init(callback) {
-    var settingsFile = path.join(__dirname, 'settings.json');
-    fs.exists(settingsFile, function(exists){
-        if (exists) {
-            return readSettings(settingsFile, callback);
-        } else {
-            settingsFile = path.join(__dirname, '../settings.json');
-            fs.exists(settingsFile, function(exists){
-                if (exists) {
-                    return readSettings(settingsFile, callback);
-                } else {
-                    return callback('settings.json not found');
-                }
-            });
-        }
-    });
-}
-
-function readSettings(settingsFile, callback){
-    fs.readFile(settingsFile, function (err, data) {
-        if (err) { return callback(err); }
-        try{
-            var config = JSON.parse(data);
-            config.apps = {};
-            config.apps.find = find;
-            config.apps.apps = config.applications;
-            delete config.applications;
-        } catch(err){
-            return callback(err);
-        }
-        return callback(null, config);
-    });
-}
+var config = require('./configuration');
 
 function find(name) {
-    var applications = this.apps;
+    var applications = this.config.applications;
     for(var app in applications) {
         if (applications.hasOwnProperty(app)) {
             if (app === name) {
@@ -54,7 +21,8 @@ function find(name) {
 }
 
 module.exports = {
-    init : init
+    config : config,
+    find : find
 };
 
 

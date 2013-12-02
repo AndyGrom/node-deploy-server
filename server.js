@@ -12,16 +12,13 @@ var ProcessManager = require('./process-manager');
 var passport = require('passport');
 var BasicStrategy = require('passport-http').BasicStrategy;
 
-appConfig.init(function(err, config) {
-    if (err) { return debug(err); }
-    start(config);
-});
+start(appConfig);
 
-function start(config){
+function start(appConfig){
 
     passport.use(new BasicStrategy(
         function(username, password, done) {
-            if (username === config.username && password === config.password) {
+            if (username === appConfig.config.username && password === appConfig.config.password) {
                 return done(null, {username : username});
             } else {
                 return done('Invalid username or password');
@@ -29,7 +26,7 @@ function start(config){
         }
     ));
 
-    var processManager = new ProcessManager(config.apps);
+    var processManager = new ProcessManager(appConfig.config.apps);
     processManager.startAll(function(){
 
         var http = require('http');
@@ -46,34 +43,28 @@ function start(config){
 
         server.post('/deploy/:appName', passport.authenticate('basic', { session: false }), function(req, res){
             var appName = req.params.appName;
-            var found = false;
-            var applications = config.apps.apps;
-            for(var app in applications) {
-                if (app === appName) {
-                    found = true;
-                    var options = {
-                        target : applications[app].path,
-                        file : req.files.file,
-                        processManager : processManager,
-                        moduleName : appName,
-                        log : []
-                    }
-                    plugins.start(options, function(err, data){
-                        var status = 200;
-                        if (err) { status = 500; }
-
-                        return res.send(status, data.log);
-                    });
-                    break;
+            var app = appConfig.find(appName);
+            if (app) {
+                var options = {
+                    target : app.path,
+                    file : req.files.file,
+                    processManager : processManager,
+                    moduleName : appName,
+                    log : []
                 }
-            }
-            if (!found) {
+                plugins.start(options, function(err, data){
+                    var status = 200;
+                    if (err) { status = 500; }
+
+                    return res.send(status, data.log);
+                });
+            } else {
                 res.send(404);
             }
         });
 
         var httpServer = http.createServer(server);
-        httpServer.listen(config.port, function(){
+        httpServer.listen(appConfig.config.port, function(){
             debug('node deploy server launched on port: ' + httpServer.address().port);
         });
     });
