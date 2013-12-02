@@ -3,3 +3,4 @@
 *.suo
 *.bak
 .idea
+node-hosting.json
