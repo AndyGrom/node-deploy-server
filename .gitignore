@@ -232,3 +232,4 @@ node_modules
 .idea
 publish.cmd
 unpublish.cmd
+node-hosting.json

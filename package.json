@@ -3,7 +3,7 @@
 	"description" : "Web service for deploy and run node.js applications",
     "version" : "1.0.0",
     "author" : "Gromozdov Andrey Alexandrovich",
-    "main" : "node-deploy-server.js",
+    "main" : "../lib/server",
 	"repository" : {
 		"type": "git",
 		"url" : "git://github.com/andygrom/node-deploy-server.git"

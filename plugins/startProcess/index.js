@@ -10,4 +10,4 @@ function startProcess(options, done) {
     });
 }
 
-module.exports.plugin = startProcess;
+module.exports = startProcess;

@@ -29,4 +29,4 @@ function installDependencies(options, done){
     });
 }
 
-module.exports.plugin = installDependencies;
+module.exports = installDependencies;

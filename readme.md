@@ -34,10 +34,10 @@ Usages
 				"foreverConfig" : {			// *config options for forever-monitor, if corresponding plugin is switched on
 					"cwd" : "/applications/node-deploy-demo" // current working dir for application
 				},
-				"plugins" : [                             // **extensions to process received file
-                    "./plugins/unpack",                 // unpack archive
-                    "./plugins/installDependencies",    // launch command 'npm install' into root folder
-                    "./plugins/startProcess"            // launch your service by dint of forever-monitor (see <https://github.com/nodejitsu/forever-monitor>)
+				"plugins" : [               // **extensions to process received file
+                    "unpack",               // unpack archive
+                    "installDependencies",  // launch command 'npm install' into root folder
+                    "startProcess"          // launch your service by dint of forever-monitor (see <https://github.com/nodejitsu/forever-monitor>)
 				]
 			}
 		}

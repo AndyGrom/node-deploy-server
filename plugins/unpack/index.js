@@ -8,7 +8,7 @@ var fs = require('fs');
 var path = require('path');
 
 var tmp = require('tmp');
-var targz = require('../../targz');
+var targz = require('../../lib/targz');
 var fstream = require('fstream');
 
 function unpack(options, done){
@@ -37,4 +37,4 @@ function unpack(options, done){
     });
 }
 
-module.exports.plugin = unpack;
+module.exports = unpack;
