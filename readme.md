@@ -45,8 +45,14 @@ Usages
 
 4. Run service
 
+    * as command-line tool
 	```bash
 	node-server-deploy
+	```
+
+	* as windows service
+	```command
+	sc start nodehosting.exe
 	```
 
 Service ready. To deploy application use node-deploy client side <https://github.com/AndyGrom/node-deploy-client>

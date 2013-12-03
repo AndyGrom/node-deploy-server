@@ -4,3 +4,6 @@
 *.bak
 .idea
 node-hosting.json
+publish.cmd
+unpublish.cmd
+lib/daemon/

@@ -233,3 +233,4 @@ node_modules
 publish.cmd
 unpublish.cmd
 node-hosting.json
+lib/daemon/

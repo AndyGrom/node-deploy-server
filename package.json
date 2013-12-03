@@ -19,10 +19,15 @@
         "forever-monitor" : "*",
         "passport" : "*",
         "passport-http" : "*",
-        "colors" : "*"
+        "colors" : "*",
+        "node-linux" : "*",
+        "node-windows" : "*"
     },
 	"bin" : {
 		"node-deploy-server" : "./bin/node-deploy-server"
 	},
-	"homepage": "https://github.com/AndyGrom/node-deploy-server"
+	"homepage": "https://github.com/AndyGrom/node-deploy-server",
+    "scripts" : {
+        "install" : "node ./scripts/install.js"
+    }
 }

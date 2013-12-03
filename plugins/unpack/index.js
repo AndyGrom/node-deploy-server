@@ -13,7 +13,11 @@ var fstream = require('fstream');
 
 function unpack(options, done){
     var targetFolder = path.join(options.target, options.moduleName);
-    fs.mkdir(targetFolder, function(){
+    fs.mkdir(targetFolder, function(err){
+        if (err && err.code !== 'EEXIST') {
+            return done(err, options);
+        }
+
         tmp.dir(function(err, tmpFolder){
             if (err){ return done(err, options); }
 
@@ -21,14 +25,16 @@ function unpack(options, done){
                 if (err){ return done(err, options); }
 
                 fs.readdir(tmpFolder, function(err, files){
+                    if (err) { return done(err, options); }
+
                     var writer = fstream.Writer(targetFolder);
                     fstream.Reader(path.join(tmpFolder, files[0])).pipe(writer);
                     writer.on('error', function(err){
                         done(err, options);
                     })
                     writer.on('close', function(){
-                        fs.unlink(options.file.path, function(){
-                            done(null, options);
+                        fs.unlink(options.file.path, function(err){
+                            done(err, options);
                         });
                     });
                 });
