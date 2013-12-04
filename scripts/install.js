@@ -9,7 +9,7 @@ var Service;
 
 if (/win/.test(platform)) {
     console.log('install windows service');
-    Service = require('node-windows').Service;
+    Service = require('../lib/node-windows').Service;
 }
 
 if (/inux/.test(platform)) {
@@ -28,7 +28,7 @@ var svc = new Service({
 // Listen for the "install" event, which indicates the
 // process is available as a service.
 svc.on('install',function(){
-    svc.start();
+    process.exit(0);
 });
 
 svc.install();

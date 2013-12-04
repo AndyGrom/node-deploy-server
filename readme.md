@@ -29,10 +29,10 @@ Usages
     ```javascript
 		"applications" : {                  // list of your hosted applications
 			"node-deploy-demo" : {			// your application name
-				"path" : "/applications",	// root path for deployment application
+				"path" : "../applications",	// root path for deployment application
 
 				"foreverConfig" : {			// *config options for forever-monitor, if corresponding plugin is switched on
-					"cwd" : "/applications/node-deploy-demo" // current working dir for application
+					"cwd" : "../applications/node-deploy-demo" // current working dir for application
 				},
 				"plugins" : [               // **extensions to process received file
                     "unpack",               // unpack archive
@@ -53,6 +53,11 @@ Usages
 	* as windows service
 	```command
 	sc start nodehosting.exe
+	```
+
+	* as linux daemon
+	```
+	service nodehosting start
 	```
 
 Service ready. To deploy application use node-deploy client side <https://github.com/AndyGrom/node-deploy-client>
