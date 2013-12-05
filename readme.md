@@ -29,12 +29,12 @@ Usages
     ```javascript
 		"applications" : {                  // list of your hosted applications
 			"node-deploy-demo" : {			// your application name
-				"path" : "../applications",	// root path for deployment application
+				"path" : "../applications",	// *root path for deployment application
 
-				"foreverConfig" : {			// *config options for forever-monitor, if corresponding plugin is switched on
+				"foreverConfig" : {			// **config options for forever-monitor, if corresponding plugin is switched on
 					"cwd" : "../applications/node-deploy-demo" // current working dir for application
 				},
-				"plugins" : [               // **extensions to process received file
+				"plugins" : [               // ***extensions to process received file
                     "unpack",               // unpack archive
                     "installDependencies",  // launch command 'npm install' into root folder
                     "startProcess"          // launch your service by dint of forever-monitor (see <https://github.com/nodejitsu/forever-monitor>)
