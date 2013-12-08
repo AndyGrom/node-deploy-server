@@ -1,7 +1,7 @@
 {
     "name" : "node-deploy-server",
 	"description" : "Web service for deploy and run node.js applications",
-    "version" : "1.0.1",
+    "version" : "1.0.5",
     "author" : "Gromozdov Andrey Alexandrovich",
     "main" : "../lib/server",
 	"repository" : {
@@ -20,8 +20,8 @@
         "passport" : "0.1.17",
         "passport-http" : "0.2.2",
         "colors" : "0.6.2",
-        "node-linux" : "0.1.2",
-        "optimist": "~0.6.0"
+        "optimist": "~0.6.0",
+        "ejs" : "*"
     },
 	"bin" : {
 		"node-deploy-server" : "./bin/node-deploy-server"
