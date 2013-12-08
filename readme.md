@@ -7,6 +7,8 @@ Usages
 ------------
 1. Install service
 
+   Ensure administrative rights and run command in terminal
+
 	```bash
 	npm install node-deploy-server -g
 	```

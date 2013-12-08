@@ -3,8 +3,8 @@ NODE_EXEC=`which node`
 NODE_ENV="production"
 NODE_APP=<%=nodeApplication%>
 APP_DIR=<%=appDir%>
-PID_FILE=/var/run/nodehosting.pid
-LOG_FILE=/var/log/nodehosting.log
+PID_FILE=/var/run/<%=name%>.pid
+LOG_FILE=/var/log/<%=name%>.log
 CONFIG_DIR=$APP_DIR/config
 
 ###############
@@ -12,7 +12,7 @@ CONFIG_DIR=$APP_DIR/config
 #REDHAT chkconfig header
 
 # chkconfig: - 58 74
-# description: The node.js deployment server.
+# description: <%=description%>
 ### BEGIN INIT INFO
 # Provides: node
 # Required-Start:    $network $remote_fs $local_fs
@@ -20,7 +20,7 @@ CONFIG_DIR=$APP_DIR/config
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: start and stop nodehosting
-# Description: The node.js deployment server
+# Description: <%=description%>
 ### END INIT INFO
 
 
