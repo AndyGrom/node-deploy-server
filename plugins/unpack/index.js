@@ -10,11 +10,12 @@ var path = require('path');
 var tmp = require('tmp');
 var targz = require('../../lib/targz');
 var fstream = require('fstream');
+var mkdirp = require('mkdirp');
 
 function unpack(options, done){
     var targetFolder = path.join(options.target, options.moduleName);
-    fs.mkdir(targetFolder, function(err){
-        if (err && err.code !== 'EEXIST') {
+    mkdirp(targetFolder, function(err){
+        if (err) {
             return done(err, options);
         }
 
