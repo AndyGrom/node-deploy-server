@@ -8,8 +8,9 @@
 		"type": "git",
 		"url" : "git://github.com/andygrom/node-deploy-server.git"
 	},
+    "license" : "MIT",
 	"keywords": [
-		"deploy"
+		"deploy", "daemon", "service", "linux", "windows"
 	],	
     "dependencies" : {
         "express" : "3.4.4",
