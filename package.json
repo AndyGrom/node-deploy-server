@@ -23,7 +23,8 @@
         "colors" : "0.6.2",
         "optimist": "~0.6.0",
         "ejs" : "*",
-        "mkdirp" : "*"
+        "mkdirp" : "*",
+        "connect-domain" : "*"
     },
 	"bin" : {
 		"node-deploy-server" : "./bin/node-deploy-server"

@@ -62,6 +62,10 @@ Usages
 
 Service ready. To deploy application use [node-deploy client side](https://github.com/AndyGrom/node-deploy-client)
 
+Supported OS
+------------
+The software is tested on the following operating systems: CentOS 6, Fedora 18, Windows 7
+
 License
 -------
 MIT. See License.txt file.

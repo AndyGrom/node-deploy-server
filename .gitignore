@@ -232,5 +232,5 @@ node_modules
 .idea
 publish.cmd
 unpublish.cmd
-node-hosting.json
+nodehosting.json
 lib/daemon/

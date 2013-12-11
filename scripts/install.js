@@ -7,7 +7,7 @@
 var path = require('path');
 var fs = require('fs');
 var platform = require('os').platform();
-var Service;
+var Service, configTarget;
 
 var templateName = 'nodehosting.json';
 var configSource = path.join(__dirname, '../lib/templates', templateName);
@@ -15,14 +15,14 @@ var configSource = path.join(__dirname, '../lib/templates', templateName);
 if (/win32/.test(platform)) {
     console.log('install windows service...');
 
-    var configTarget = path.join(__dirname, '../', templateName);
+    configTarget = path.join(__dirname, '../', templateName);
     Service = require('../lib/service/windows').Service;
 }
 
 if (/linux/.test(platform)) {
     console.log('install linux daemon...');
 
-    var configTarget = path.join('/etc', templateName);
+    configTarget = path.join('/etc', templateName);
     Service = require('../lib/service/systemv/index').Service;
 }
 
@@ -45,7 +45,7 @@ installConfigTemplate = function() {
 
     var data = fs.readFileSync(configSource);
     fs.writeFileSync(configTarget, data, {mode : '0666'});
-}
+};
 
 installConfigTemplate();
 svc.install();

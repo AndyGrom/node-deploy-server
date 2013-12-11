@@ -3,7 +3,7 @@
 *.suo
 *.bak
 .idea
-node-hosting.json
+nodehosting.json
 publish.cmd
 unpublish.cmd
 lib/daemon/
