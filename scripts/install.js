@@ -10,7 +10,7 @@ var platform = require('os').platform();
 var Service, configTarget;
 
 var templateName = 'nodehosting.json';
-var configSource = path.join(__dirname, '../lib/templates', templateName);
+var configSource = path.join(__dirname, '../lib/templates', templateName) + '.template';
 
 if (/win32/.test(platform)) {
     console.log('install windows service...');
@@ -40,11 +40,17 @@ svc.on('install',function(){
 });
 
 installConfigTemplate = function() {
+    console.log('Target configuration: ' + configTarget);
     var exists = fs.existsSync(configTarget);
-    if (exists) { return; }
+    if (exists) {
+        console.log('Existing... skip');
+        return;
+    }
 
+    console.log('Source configuration: ' + configSource);
     var data = fs.readFileSync(configSource);
     fs.writeFileSync(configTarget, data, {mode : '0666'});
+    console.log('Configuration created');
 };
 
 installConfigTemplate();
