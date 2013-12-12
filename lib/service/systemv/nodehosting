@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 NODE_EXEC=`find /usr -name node -type f | head -1`
 NODE_ENV="production"
 NODE_APP=<%=nodeApplication%>
@@ -71,17 +71,17 @@ case "$1" in
             PID=`cat $PID_FILE`
             if [ -z "`ps -ef | grep $PID | grep -v grep`" ]
             then
-                echo "Node app stopped but pid file exists"
+                echo "<%=name%> stopped but pid file exists"
             else
-                echo "Node app running with pid $PID"
+                echo "<%=name%> running with pid $PID"
 
             fi
         else
-            echo "Node app stopped"
+            echo "<%=name%> stopped"
         fi
         ;;
 
         *)
-                echo "Usage: /etc/init.d/node-app {start|stop|restart|status}"
+                echo "Usage: /etc/init.d/<%=name%> {start|stop|restart|status}"
         ;;
 esac
