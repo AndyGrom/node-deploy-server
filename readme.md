@@ -51,12 +51,12 @@ Usages
 	```
 
 	* as windows service
-	```command
+	```bash
 	sc start nodehosting.exe
 	```
 
 	* as linux daemon
-	```
+	```bash
 	service nodehosting start
 	```
 
@@ -65,6 +65,14 @@ Service ready. To deploy application use [node-deploy client side](https://githu
 Supported OS
 ------------
 The software is tested on the following operating systems: CentOS 6, Fedora 18, Windows 7
+
+Note
+----
+On Red Had based system do not forget to include the service in the boot.
+
+```bash
+chkconfig nodehosting on
+```
 
 License
 -------
