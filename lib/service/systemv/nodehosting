@@ -1,5 +1,5 @@
 #!/bin/sh
-NODE_EXEC=`find /usr -name node -type f | head -1`
+NODE_EXEC=`find /usr -name node | head -1`
 NODE_ENV="production"
 NODE_APP=<%=nodeApplication%>
 APP_DIR=<%=appDir%>

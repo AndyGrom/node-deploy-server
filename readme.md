@@ -64,7 +64,7 @@ Service ready. To deploy application use [node-deploy client side](https://githu
 
 Supported OS
 ------------
-The software is tested on the following operating systems: CentOS 6, Fedora 18, Windows 7
+The software is tested on the following operating systems: CentOS 6, Fedora 18, Debian 7.2 (wheezy), Windows 7
 
 Note
 ----
