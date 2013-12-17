@@ -26,6 +26,10 @@ if (/linux/.test(platform)) {
     Service = require('../lib/service/systemv/index').Service;
 }
 
+if (!Service) {
+    throw Error("Not supported platform: " + platform);
+}
+
 // Create a new service object
 var svc = new Service({
     name: 'nodehosting',
