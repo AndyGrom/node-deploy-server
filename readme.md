@@ -13,11 +13,13 @@ Usages
 ------------
 1. Install package
 
-   Ensure administrative rights and run command in terminal
+   Ensure administrative rights and perform command in terminal.
 
 	```bash
-	npm install node-deploy-server -g
+	npm install -g node-deploy-server --unsafe-perm
 	```
+	Package installing service script into /etc/init.d/ folder on linux systems, therefore you are must specify
+	--unsafe-perm parameter for npm.
 
 2. Configuration
 
