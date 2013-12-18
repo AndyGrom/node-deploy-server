@@ -7,7 +7,7 @@ Features
 --------
 1. Easy installation.
 2. Your services launch by dint of [forever-monitor](https://github.com/nodejitsu/forever-monitor).
-3. Installing as Linux daemon or Windows service.
+3. Installing as [Linux daemon](#supported-os "see supported os") or Windows service.
 
 Usages
 ------------
