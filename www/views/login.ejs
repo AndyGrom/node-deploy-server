@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Node deploy server</title>
+
+    <% if (args._.indexOf('debug') > -1) { %>
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/icon-font.css">
+    <link rel="stylesheet" href="css/login.css" />
+    <% } else { %>
+    <link rel="stylesheet" href="dist/login.min.css" media="screen">
+    <% } %>
+    <script>
+        function bodyOnLoad () {
+            var element = window.document.getElementById('username-input');
+            element.focus();
+        }
+    </script>
+</head>
+<body onload="bodyOnLoad()">
+    <div class="centerXY">
+        <form id="form" method="POST" action="/login">
+
+            <div class="border1">
+                <div class="border2">
+                    <table class="layout-form-table">
+                        <tr>
+                            <td  class="form-content">
+                                <div>
+                                    <table class="work-area-brand">
+                                        <tr>
+                                            <td class="brand-label"><%=serverName%></td>
+                                            <td class="lock-image">
+                                                <div>
+                                                    <img src="/img/lock.png" alt="lock" />
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                                <div class="work-area-controls">
+                                    <table>
+                                        <tr class="work-area-row">
+                                            <td>Username:</td>
+                                            <td></td>
+                                            <td>Password:</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="input-container">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="username-input" type="text" name="username">
+                                                        </td>
+                                                        <td>
+                                                            <i class="self-icon-user"></i>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                            <td style="min-width: 20px"></td>
+                                            <td class="input-container">
+                                                <table>
+                                                    <tr>
+                                                        <td>
+                                                            <input id="password-input" type="password" name="password">
+                                                        </td>
+                                                        <td>
+                                                            <i class="self-icon-key"></i>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                            <td class="form-button" onclick="window.document.getElementById('form').submit()">
+                                <img src="/img/arrow.png" alt="arrow" >
+                                <span class="submit-button">LOG IN</span>
+
+                                    <button type="submit" class="submit-button"></button>
+
+                            </td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="buttons">
+
+            </div>
+
+
+        </form>
+    </div>
+</body>

@@ -39,6 +39,8 @@ local.properties
 *.suo
 *.user
 *.sln.docstates
+*.njsproj
+*.sln
 
 # Build results
 
@@ -234,3 +236,5 @@ publish.cmd
 unpublish.cmd
 nodehosting.json
 lib/daemon/
+app.key
+app.cert

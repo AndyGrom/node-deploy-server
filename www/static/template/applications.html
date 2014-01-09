@@ -1,0 +1,142 @@
+<fieldset>
+    <legend><i class="self-icon-cog-alt"></i><span class="indent6">Applications</span></legend>
+    <div class="row-fluid">
+
+        <div class="span3">
+            <div class="well">
+                <div class="nav">
+                    <ul class="nav nav-list">
+                        <li class="divider"></li>
+                        <li ng-repeat="(name, properties) in applications" ng-class="currentAppName == name ? 'active' : ''">
+                            <a href="" ng-click="selectApplication(name)">
+                                <i class="self-icon-cog-alt">  </i>
+                                {{name}}
+                                <i data-ng-show="currentAppName == name"
+                                   data-ng-click="removeApplication(name)"
+                                   class="self-icon-cancel pull-right"
+                                   title="remove application">
+                                </i>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <button class="btn btn-block" data-ng-click="showNewApplication = !showNewApplication">
+                                <i class="self-icon-doc-new"></i>
+                                <span>Create application</span>
+                            </button>
+                            <div data-ng-show="showNewApplication">
+                                <label>Application name:</label>
+                                <input class="input-block-level"
+                                       type="text"
+                                       required
+                                       data-ng-model="newApplicationName"
+                                       data-ng-change="newApplicationNameChange()" />
+                                <button class="btn btn-primary btn-block" data-ng-click="createApplication()" data-ng-disabled="!newApplicationNameValid">
+                                    <i class="self-icon-ok"></i>
+                                    <span>Create</span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="span9" ng-show="currentApp">
+
+            <div data-tabs="">
+
+                <div data-pane title="Common">
+                    <label>Path</label>
+                    <input type="text" data-ng-model="currentApp.path" /> <br />
+                    <input type="checkbox" data-ng-model="currentApp.startProcess" /> (startProcess) Run an application.<br />
+                </div>
+                <div data-pane title="Monitoring">
+                    <h4>
+                        See <a href="https://github.com/nodejitsu/forever-monitor" target="_blank">forever-monitor</a> for details
+                    </h4>
+                    <div data-tabs="">
+                        <div data-pane title="Basic configuration options">
+                            <input type="checkbox" ng-model="currentApp.foreverConfig.silent"> (silent) Silences the output from stdout and stderr in the parent process<br />
+                            <label>(uid) Custom uid for this forever process. (default: autogen)</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.uid">
+                            <label>(pidFile) Path to put pid information for the process(es) started</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.pidFile" placeholder="path/to/a.pid">
+                            <label>(max) Sets the maximum number of times a given script should run</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.max"> <br />
+                            <input type="checkbox" ng-model="currentApp.foreverConfig.killTree" value="1"> (killTree) Kills the entire child process tree on `exit`<br />
+                        </div>
+
+                        <div data-pane title="Restart">
+                            <h5>These options control how quickly forever restarts a child process as well as when to kill a "spinning" process </h5>
+
+                            <label>(minUptime) Minimum time a child process has to be up. Forever will 'exit' otherwise.</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.minUptime" placeholder="2000">
+                            <label>(spinSleepTime) Interval between restarts if a child is spinning (i.e. alive < minUptime).</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.spinSleepTime" placeholder="1000">
+                        </div>
+
+                        <div data-pane title="Spawn process">
+                            <h5>Command to spawn as well as options and other vars (env, cwd, etc) to pass along</h5>
+
+                            <label>(command) Binary to run (default: 'node')</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.command" placeholder="node" />
+
+                            <label>(options) Additional arguments to pass to the script</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.options" placeholder="foo bar" />
+
+                            <label>(sourceDir) Directory that the source script is in</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.sourceDir" placeholder="script/path" />
+                        </div>
+
+                        <div data-pane title="Watch">
+                            <h5>Options for restarting on watched files.</h5>
+                            <input type="checkbox" ng-model="currentApp.foreverConfig.watch" /> (watch) Value indicating if we should watch files.
+
+                            <label>Dot files we should read to ignore ('.foreverignore', etc).</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.watchIgnoreDotFiles" placeholder="null" />
+
+                            <label>Ignore patterns to use when watching files.</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.watchIgnorePatterns" placeholder="null" />
+
+                            <label>Top-level directory to watch from.</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.watchDirectory" placeholder="null" />
+                        </div>
+
+                        <div data-pane title="Spawn options">
+                            <h5>All or nothing options passed along to `child_process.spawn`.</h5>
+
+                            <label>(spawnWith.customFds) that forever spawns.</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.spawnWith.customFds" placeholder="-1, -1, -1" /> <br />
+
+                            <input type="checkbox" ng-model="currentApp.foreverConfig.spawnWith.setsid" /> (spawnWith.setsid)
+
+                            <h5>More specific options to pass along to `child_process.spawn` which will override anything passed to the `spawnWith` option</h5>
+
+                            <label>(cwd) current working directory</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.cwd" placeholder="/path/to/child/working/directory" />
+                        </div>
+                        <div data-pane title="Log files">
+                            <h5>Log files and associated logging options for this instance</h5>
+
+                            <label>(logFile) Path to log output from forever process (when daemonized)</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.logFile" placeholder="path/to/file" />
+
+                            <label>(outFile) Path to log output from child stdout</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.outFile" placeholder="path/to/file" />
+
+                            <label>(errFile) Path to log output from child stderr</label>
+                            <input type="text" ng-model="currentApp.foreverConfig.errFile" placeholder="path/to/file" />
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary pull-right" data-ng-click="saveSettings()">
+                <i class="self-icon-ok"></i>
+                <span>Apply settings</span>
+            </button>
+        </div>
+
+    </div>
+</fieldset>

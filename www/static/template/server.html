@@ -1,0 +1,42 @@
+<fieldset>
+    <legend><i class="self-icon-cog"></i><span class="indent6">Server settings</span></legend>
+
+    <div class="row-fluid">
+        <div class="span7">
+            <div data-tabs="">
+
+                <div data-pane title="Common">
+                    <label>TCP port:</label>
+                    <input type="number" data-ng-model="settings.port" /> <br />
+                    <label>Username:</label>
+                    <input type="text" data-ng-model="settings.username" /> <br />
+                    <label>Password:</label>
+                    <input type="password" data-ng-model="settings.password" /> <br />
+
+                </div>
+                <div data-pane title="SSL">
+                    <input type="checkbox" data-ng-model="settings.ssl"/> SSL support
+                    <label>Key
+                        <textarea rows="6" spellcheck="false"
+                                  class="input-block-level monospace"
+                                  data-ng-change="keyOnChange()"
+                                  data-ng-model="settings.key"></textarea>
+                        
+                    </label>
+                    <label>
+                        Certificate
+                        <textarea rows="6" spellcheck="false"
+                                  class="input-block-level monospace"
+                                  data-ng-change="keyOnChange()"
+                                  data-ng-model="settings.cert"></textarea>
+                    </label>
+                </div>
+
+            </div>
+            <button class="btn btn-primary pull-right" data-ng-click="saveSettings()">
+                <i class="self-icon-ok"></i>
+                <span>Apply settings</span>
+            </button>
+        </div>
+    </div>
+</fieldset>

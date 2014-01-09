@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<!--[if IE 9]><html class="lt-ie10" lang="en" > <![endif]-->
+<html class="no-js" lang="en" ng-app="app" >
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploy server</title>
+
+	<% if (args._.indexOf('debug') > -1) { %>
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/bootstrap.css" media="screen">
+    <link rel="stylesheet" href="css/icon-font.css">
+    <link rel="stylesheet" href="css/angular-csp.css">
+    <link rel="stylesheet" href="css/app.css">
+	<% } else { %>
+    <link rel="stylesheet" href="dist/app.min.css" media="screen">
+	<% } %>
+
+
+</head>
+<body ng-controller="main">
+
+    <div class="navbar navbar-inverse navbar-static-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a class="brand" href="/"><i class="self-icon-home"></i><span class="indent6"><%=serverName%></span></a>
+
+                <ul class="nav">
+                    <li class="divider"></li>
+                    <li><a href="#/applications"><i class="self-icon-cog-alt"></i><span class="indent6">Applications</span></a></li>
+                    <li><a href="#/server"><i class="self-icon-cog"></i><span class="indent6">Server</span></a></li>
+                    <li><a href="#/deploy"><i class="self-icon-fork"></i><span class="indent6">Deploy</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-error" ng-show="error">{{error}}</div>
+
+    <div ng-view class="container"></div>
+
+    <% if (args._.indexOf('debug') > -1) { %>
+    <script src="js/vendor/modernizr.js"></script>
+    <script src="js/vendor/angular.js"></script>
+    <script src="js/vendor/angular-route.js"></script>
+
+    <script src="js/scripts/app.js"></script>
+    <script src="js/scripts/main.js"></script>
+    <script src="js/scripts/angular-tab.js"></script>
+    <script src="js/scripts/applications.js"></script>
+    <script src="js/scripts/server.js"></script>
+
+
+    <% } else { %>
+    <script src="dist/app.min.js"></script>
+    <% } %>
+</body>
+</html>

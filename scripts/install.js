@@ -4,6 +4,8 @@
  * Time: 0:09
  */
 
+"use strict";
+
 var path = require('path');
 var fs = require('fs');
 var platform = require('os').platform();
@@ -43,7 +45,7 @@ svc.on('install',function(){
     console.log('service installed.');
 });
 
-installConfigTemplate = function() {
+var installConfigTemplate = function() {
     console.log('Target configuration: ' + configTarget);
     var exists = fs.existsSync(configTarget);
     if (exists) {

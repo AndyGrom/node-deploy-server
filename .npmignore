@@ -7,3 +7,5 @@ nodehosting.json
 publish.cmd
 unpublish.cmd
 lib/daemon/
+app.key
+app.cert
