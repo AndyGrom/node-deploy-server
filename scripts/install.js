@@ -8,54 +8,46 @@
 
 var path = require('path');
 var fs = require('fs');
-var platform = require('os').platform();
-var Service, configTarget;
+var Service;
+var platform = require('./common');
 
-var templateName = 'nodehosting.json';
-var configSource = path.join(__dirname, '../lib/templates', templateName) + '.template';
-
-if (/win32/.test(platform)) {
+if (platform.isWin32) {
     console.log('install windows service...');
-
-    configTarget = path.join(__dirname, '../', templateName);
     Service = require('../lib/service/windows').Service;
 }
 
-if (/linux/.test(platform)) {
+if (platform.isLinux) {
     console.log('install linux daemon...');
-
-    configTarget = path.join('/etc', templateName);
     Service = require('../lib/service/systemv/index').Service;
 }
 
 if (!Service) {
-    throw Error("Not supported platform: " + platform);
+    throw Error("Not supported platform: " + platform.platformName);
 }
 
-// Create a new service object
 var svc = new Service({
     name: 'nodehosting',
     description: 'The node.js deploy service',
     script: './lib/server.js'
 });
 
-// Listen for the "install" event, which indicates the
-// process is available as a service.
 svc.on('install',function(){
     console.log('service installed.');
 });
 
 var installConfigTemplate = function() {
-    console.log('Target configuration: ' + configTarget);
-    var exists = fs.existsSync(configTarget);
+    console.log('Target configuration: ' + platform.configFile);
+    var exists = fs.existsSync(platform.configFile);
     if (exists) {
-        console.log('Existing... skip');
+        console.log('Configuration file exist. Skiping...');
         return;
     }
 
-    console.log('Source configuration: ' + configSource);
-    var data = fs.readFileSync(configSource);
-    fs.writeFileSync(configTarget, data, {mode : '0666'});
+    console.log('Source configuration: ' + platform.configFileSource);
+
+    var data = fs.readFileSync(platform.configFileSource);
+    fs.writeFileSync(platform.configFile, data, {mode : '0666'});
+
     console.log('Configuration created');
 };
 
