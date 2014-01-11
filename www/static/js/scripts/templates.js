@@ -434,6 +434,14 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "\n" +
     "                    <input type=\"password\" data-ng-model=\"settings.password\" /> <br />\r" +
     "\n" +
+    "                    <hr/>\r" +
+    "\n" +
+    "                    <input type=\"checkbox\" data-ng-model=\"settings.autoCreateApplication\" /> Auto create deployed application<br/>\r" +
+    "\n" +
+    "                    <label>Default folder for auto created applications</label>\r" +
+    "\n" +
+    "                    <input type=\"text\" data-ng-model=\"settings.defaultApplicationPath\" /><br/>\r" +
+    "\n" +
     "\r" +
     "\n" +
     "                </div>\r" +

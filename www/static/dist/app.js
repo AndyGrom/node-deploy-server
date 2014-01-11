@@ -1,4 +1,4 @@
-/*! node-deploy-server - v0.2.0 - 2014-01-10
+/*! node-deploy-server - v0.2.0 - 2014-01-11
 * https://github.com/AndyGrom/node-deploy-server
 * Copyright (c) 2014 ; Licensed MIT */
 /*!
@@ -23480,6 +23480,14 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "                    <label>Password:</label>\r" +
     "\n" +
     "                    <input type=\"password\" data-ng-model=\"settings.password\" /> <br />\r" +
+    "\n" +
+    "                    <hr/>\r" +
+    "\n" +
+    "                    <input type=\"checkbox\" data-ng-model=\"settings.autoCreateApplication\" /> Auto create deployed application<br/>\r" +
+    "\n" +
+    "                    <label>Default folder for auto created applications</label>\r" +
+    "\n" +
+    "                    <input type=\"text\" data-ng-model=\"settings.defaultApplicationPath\" /><br/>\r" +
     "\n" +
     "\r" +
     "\n" +

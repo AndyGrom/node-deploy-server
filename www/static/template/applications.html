@@ -48,7 +48,9 @@
                 <div data-pane title="Common">
                     <label>Path</label>
                     <input type="text" data-ng-model="currentApp.path" /> <br />
-                    <input type="checkbox" data-ng-model="currentApp.startProcess" /> (startProcess) Run an application.<br />
+                    <label class="checkbox">
+                        <input type="checkbox" data-ng-model="currentApp.startProcess" /> (startProcess) Run an application.
+                    </label>
                 </div>
                 <div data-pane title="Monitoring">
                     <h4>
@@ -56,14 +58,18 @@
                     </h4>
                     <div data-tabs="">
                         <div data-pane title="Basic configuration options">
-                            <input type="checkbox" ng-model="currentApp.foreverConfig.silent"> (silent) Silences the output from stdout and stderr in the parent process<br />
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="currentApp.foreverConfig.silent"> (silent) Silences the output from stdout and stderr in the parent process
+                            </label>
                             <label>(uid) Custom uid for this forever process. (default: autogen)</label>
                             <input type="text" ng-model="currentApp.foreverConfig.uid">
                             <label>(pidFile) Path to put pid information for the process(es) started</label>
                             <input type="text" ng-model="currentApp.foreverConfig.pidFile" placeholder="path/to/a.pid">
                             <label>(max) Sets the maximum number of times a given script should run</label>
                             <input type="text" ng-model="currentApp.foreverConfig.max"> <br />
-                            <input type="checkbox" ng-model="currentApp.foreverConfig.killTree" value="1"> (killTree) Kills the entire child process tree on `exit`<br />
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="currentApp.foreverConfig.killTree" value="1"> (killTree) Kills the entire child process tree on `exit`
+                            </label>
                         </div>
 
                         <div data-pane title="Restart">
@@ -90,7 +96,9 @@
 
                         <div data-pane title="Watch">
                             <h5>Options for restarting on watched files.</h5>
-                            <input type="checkbox" ng-model="currentApp.foreverConfig.watch" /> (watch) Value indicating if we should watch files.
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="currentApp.foreverConfig.watch" /> (watch) Value indicating if we should watch files.
+                            </label>
 
                             <label>Dot files we should read to ignore ('.foreverignore', etc).</label>
                             <input type="text" ng-model="currentApp.foreverConfig.watchIgnoreDotFiles" placeholder="null" />
@@ -107,8 +115,10 @@
 
                             <label>(spawnWith.customFds) that forever spawns.</label>
                             <input type="text" ng-model="currentApp.foreverConfig.spawnWith.customFds" placeholder="-1, -1, -1" /> <br />
-
-                            <input type="checkbox" ng-model="currentApp.foreverConfig.spawnWith.setsid" /> (spawnWith.setsid)
+                            
+                            <label class="checkbox">
+                                <input type="checkbox" ng-model="currentApp.foreverConfig.spawnWith.setsid" /> (spawnWith.setsid)
+                            </label>
 
                             <h5>More specific options to pass along to `child_process.spawn` which will override anything passed to the `spawnWith` option</h5>
 

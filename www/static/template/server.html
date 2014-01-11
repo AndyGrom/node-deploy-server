@@ -12,8 +12,14 @@
                     <input type="text" data-ng-model="settings.username" /> <br />
                     <label>Password:</label>
                     <input type="password" data-ng-model="settings.password" /> <br />
+                    <hr/>
+                    <label class="checkbox">
+                        <input type="checkbox" data-ng-model="settings.autoCreateApplication" /> Auto create deployed application
+                    </label>
+                    <label>Default folder for auto created applications</label>
+                    <input type="text" data-ng-model="settings.defaultApplicationPath" /><br />
 
-                </div>
+</div>
                 <div data-pane title="SSL">
                     <input type="checkbox" data-ng-model="settings.ssl"/> SSL support
                     <label>Key

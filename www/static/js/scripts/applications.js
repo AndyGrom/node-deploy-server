@@ -14,6 +14,7 @@
         $scope.applications = {};
         $scope.currentApp = null;
         $scope.currentAppName = '';
+        $scope.currentAppUrl = '';
 
         $scope.newApplicationName = '';
         $scope.showNewApplication = false;

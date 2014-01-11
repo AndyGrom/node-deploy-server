@@ -32,6 +32,7 @@
     "optimist": "*",
     "ejs": "*",
     "mkdirp": "*",
+    "rimraf" : "*",
     "passport-local": "~0.1.6"
   },
   "engines": {
