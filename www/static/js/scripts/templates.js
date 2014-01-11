@@ -102,7 +102,11 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "\n" +
     "                    <input type=\"text\" data-ng-model=\"currentApp.path\" /> <br />\r" +
     "\n" +
-    "                    <input type=\"checkbox\" data-ng-model=\"currentApp.startProcess\" /> (startProcess) Run an application.<br />\r" +
+    "                    <label class=\"checkbox\">\r" +
+    "\n" +
+    "                        <input type=\"checkbox\" data-ng-model=\"currentApp.startProcess\" /> (startProcess) Run an application.\r" +
+    "\n" +
+    "                    </label>\r" +
     "\n" +
     "                </div>\r" +
     "\n" +
@@ -118,7 +122,11 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "\n" +
     "                        <div data-pane title=\"Basic configuration options\">\r" +
     "\n" +
-    "                            <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.silent\"> (silent) Silences the output from stdout and stderr in the parent process<br />\r" +
+    "                            <label class=\"checkbox\">\r" +
+    "\n" +
+    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.silent\"> (silent) Silences the output from stdout and stderr in the parent process\r" +
+    "\n" +
+    "                            </label>\r" +
     "\n" +
     "                            <label>(uid) Custom uid for this forever process. (default: autogen)</label>\r" +
     "\n" +
@@ -132,7 +140,11 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "\n" +
     "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.max\"> <br />\r" +
     "\n" +
-    "                            <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.killTree\" value=\"1\"> (killTree) Kills the entire child process tree on `exit`<br />\r" +
+    "                            <label class=\"checkbox\">\r" +
+    "\n" +
+    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.killTree\" value=\"1\"> (killTree) Kills the entire child process tree on `exit`\r" +
+    "\n" +
+    "                            </label>\r" +
     "\n" +
     "                        </div>\r" +
     "\n" +
@@ -186,7 +198,11 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "\n" +
     "                            <h5>Options for restarting on watched files.</h5>\r" +
     "\n" +
-    "                            <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.watch\" /> (watch) Value indicating if we should watch files.\r" +
+    "                            <label class=\"checkbox\">\r" +
+    "\n" +
+    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.watch\" /> (watch) Value indicating if we should watch files.\r" +
+    "\n" +
+    "                            </label>\r" +
     "\n" +
     "\r" +
     "\n" +
@@ -220,9 +236,13 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "\n" +
     "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.spawnWith.customFds\" placeholder=\"-1, -1, -1\" /> <br />\r" +
     "\n" +
-    "\r" +
+    "                            \r" +
     "\n" +
-    "                            <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.spawnWith.setsid\" /> (spawnWith.setsid)\r" +
+    "                            <label class=\"checkbox\">\r" +
+    "\n" +
+    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.spawnWith.setsid\" /> (spawnWith.setsid)\r" +
+    "\n" +
+    "                            </label>\r" +
     "\n" +
     "\r" +
     "\n" +
@@ -436,15 +456,19 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "\n" +
     "                    <hr/>\r" +
     "\n" +
-    "                    <input type=\"checkbox\" data-ng-model=\"settings.autoCreateApplication\" /> Auto create deployed application<br/>\r" +
+    "                    <label class=\"checkbox\">\r" +
+    "\n" +
+    "                        <input type=\"checkbox\" data-ng-model=\"settings.autoCreateApplication\" /> Auto create deployed application\r" +
+    "\n" +
+    "                    </label>\r" +
     "\n" +
     "                    <label>Default folder for auto created applications</label>\r" +
     "\n" +
-    "                    <input type=\"text\" data-ng-model=\"settings.defaultApplicationPath\" /><br/>\r" +
+    "                    <input type=\"text\" data-ng-model=\"settings.defaultApplicationPath\" /><br />\r" +
     "\n" +
     "\r" +
     "\n" +
-    "                </div>\r" +
+    "</div>\r" +
     "\n" +
     "                <div data-pane title=\"SSL\">\r" +
     "\n" +
