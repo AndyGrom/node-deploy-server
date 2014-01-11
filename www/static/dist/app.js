@@ -23160,11 +23160,11 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "\n" +
     "                <div data-pane title=\"Monitoring\">\r" +
     "\n" +
-    "                    <h4>\r" +
+    "                    <h5>\r" +
     "\n" +
-    "                        See <a href=\"https://github.com/nodejitsu/forever-monitor\" target=\"_blank\">forever-monitor</a> for details\r" +
+    "                        See <a href=\"https://github.com/nodejitsu/forever-monitor#options-available-when-using-forever-in-nodejs\" target=\"_blank\">forever-monitor</a> for details\r" +
     "\n" +
-    "                    </h4>\r" +
+    "                    </h5>\r" +
     "\n" +
     "                    <div data-tabs=\"\">\r" +
     "\n" +
