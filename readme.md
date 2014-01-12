@@ -46,7 +46,7 @@ Default credentials is admin/admin. Do not forget to change their.
 
 Supported OS
 ------------
-The software is tested on the following operating systems: CentOS 6, Fedora 18, Debian 7.2 (wheezy), Windows 7
+The software is tested on the following operating systems: CentOS 6, Fedora 18, Debian 7.2 (wheezy), Windows 7, Windows 8
 
 Note
 ----
