@@ -14,6 +14,7 @@ var platforms = {
 }
 
 var templateName = 'nodehosting.json';
+var nodePath = path.dirname(process.execPath);
 
 var result = {
     isWin32 : /win32/.test(platform),
@@ -24,11 +25,13 @@ var result = {
 
 if (result.isWin32) {
     result.configFile = path.join(__dirname, '../', templateName);
+    result.nodeExec = 'node.exe';
 }
 
 if (result.isLinux) {
     result.platform = platforms.linux;
     result.configFile = path.join('/etc', templateName);
+    result.nodeExec = path.join(nodePath, 'node');
 }
 
 module.exports = result;

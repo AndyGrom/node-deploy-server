@@ -93,6 +93,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-cssmin');
     grunt.loadNpmTasks('grunt-angular-templates');
+    grunt.loadNpmTasks('grunt-release');
 
     // Default task.
     grunt.registerTask('default', ['jshint', 'ngtemplates', 'concat', 'uglify', 'cssmin']);
