@@ -124,6 +124,12 @@
 
                             <label>(cwd) current working directory</label>
                             <input type="text" ng-model="currentApp.foreverConfig.cwd" placeholder="/path/to/child/working/directory" />
+
+                            <h5>Environment Variables passed to the application</h5>
+
+                            <label>process.env attributes in JSON Format</label>
+                            <textarea ng-model="currentApp.foreverConfig.env" aria-multiline="20"></textarea>
+
                         </div>
                         <div data-pane title="Log files">
                             <h5>Log files and associated logging options for this instance</h5>
