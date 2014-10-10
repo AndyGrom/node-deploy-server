@@ -1,4 +1,4 @@
-/*! node-deploy-server - v0.2.0 - 2014-10-09
+/*! node-deploy-server - v0.2.0 - 2014-10-10
 * https://github.com/AndyGrom/node-deploy-server
 * Copyright (c) 2014 ; Licensed MIT */
 /*!
@@ -22893,7 +22893,7 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 (function (){
     "use strict";
 
-    var app = angular.module('app', ['ngRoute', 'main', 'applications', 'server', 'tabs']);
+    var app = angular.module('app', ['ngRoute', 'main', 'applications', 'server', 'tabs', 'json']);
 
     app.config(['$routeProvider',
         function($routeProvider) {
@@ -22997,6 +22997,47 @@ function ngViewFillContentFactory($compile, $controller, $route) {
 
     }]);
 }());
+(function () {
+    var module = angular.module('json', []);
+
+    module.directive('json', function () {
+        return {
+            restrict: 'A', // only activate on element attribute
+            require: 'ngModel', // get a hold of NgModelController
+            link: function (scope, element, attrs, ngModelCtrl) {
+                function fromUser(text) {
+                    // Beware: trim() is not available in old browsers
+                    if (!text || text.trim() === '') {
+                        return {};
+                    } else {
+                        // TODO catch SyntaxError, and set validation error..
+                        return angular.fromJson(text);
+                    }
+                }
+
+                function toUser(object) {
+                    // better than JSON.stringify(), because it formats + filters $$hashKey etc.
+                    return angular.toJson(object, true);
+                }
+
+                // push() if faster than unshift(), and avail. in IE8 and earlier (unshift isn't)
+                ngModelCtrl.$parsers.push(fromUser);
+                ngModelCtrl.$formatters.push(toUser);
+
+                // $watch(attrs.ngModel) wouldn't work if this directive created a new scope;
+                // see http://stackoverflow.com/questions/14693052/watch-ngmodel-from-inside-directive-using-isolate-scope how to do it then
+                scope.$watch(attrs.ngModel, function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        ngModelCtrl.$setViewValue(toUser(newValue));
+                        // TODO avoid this causing the focus of the input to be lost..
+                        ngModelCtrl.$render();
+                    }
+                }, true); // MUST use objectEquality (true) here, for some reason..
+            }
+        };
+    });
+}());
+
 (function () {
     "use strict";
 
@@ -23180,7 +23221,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "                            <h5>Environment Variables passed to the application</h5>\n" +
     "\n" +
     "                            <label>process.env attributes in JSON Format</label>\n" +
-    "                            <textarea ng-model=\"currentApp.foreverConfig.env\" aria-multiline=\"20\"></textarea>\n" +
+    "                            <textarea json ng-model=\"currentApp.foreverConfig.env\" rows=\"8\"></textarea>\n" +
     "\n" +
     "                        </div>\n" +
     "                        <div data-pane title=\"Log files\">\n" +

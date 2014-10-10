@@ -132,7 +132,7 @@ angular.module('app').run(['$templateCache', function($templateCache) {
     "                            <h5>Environment Variables passed to the application</h5>\n" +
     "\n" +
     "                            <label>process.env attributes in JSON Format</label>\n" +
-    "                            <textarea ng-model=\"currentApp.foreverConfig.env\" aria-multiline=\"20\"></textarea>\n" +
+    "                            <textarea json ng-model=\"currentApp.foreverConfig.env\" rows=\"8\"></textarea>\n" +
     "\n" +
     "                        </div>\n" +
     "                        <div data-pane title=\"Log files\">\n" +
