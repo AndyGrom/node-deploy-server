@@ -1,4 +1,4 @@
-/*! node-deploy-server - v0.2.0 - 2014-10-10
+/*! node-deploy-server - v0.2.0 - 2014-10-16
 * https://github.com/AndyGrom/node-deploy-server
 * Copyright (c) 2014 ; Licensed MIT */
 /*!
@@ -23091,290 +23091,556 @@ angular.module('app').run(['$templateCache', function($templateCache) {
   'use strict';
 
   $templateCache.put('template/applications.html',
-    "<fieldset>\n" +
-    "    <legend><i class=\"self-icon-cog-alt\"></i><span class=\"indent6\">Applications</span></legend>\n" +
-    "    <div class=\"row-fluid\">\n" +
+    "<fieldset>\r" +
     "\n" +
-    "        <div class=\"span3\">\n" +
-    "            <div class=\"well\">\n" +
-    "                <div class=\"nav\">\n" +
-    "                    <ul class=\"nav nav-list\">\n" +
-    "                        <li class=\"divider\"></li>\n" +
-    "                        <li ng-repeat=\"(name, properties) in applications\" ng-class=\"currentAppName == name ? 'active' : ''\">\n" +
-    "                            <a href=\"\" ng-click=\"selectApplication(name)\">\n" +
-    "                                <i class=\"self-icon-cog-alt\">  </i>\n" +
-    "                                {{name}}\n" +
-    "                                <i data-ng-show=\"currentAppName == name\"\n" +
-    "                                   data-ng-click=\"removeApplication(name)\"\n" +
-    "                                   class=\"self-icon-cancel pull-right\"\n" +
-    "                                   title=\"remove application\">\n" +
-    "                                </i>\n" +
-    "                            </a>\n" +
-    "                        </li>\n" +
-    "                        <li class=\"divider\"></li>\n" +
-    "                        <li>\n" +
-    "                            <button class=\"btn btn-block\" data-ng-click=\"showNewApplication = !showNewApplication\">\n" +
-    "                                <i class=\"self-icon-doc-new\"></i>\n" +
-    "                                <span>Create application</span>\n" +
-    "                            </button>\n" +
-    "                            <div data-ng-show=\"showNewApplication\">\n" +
-    "                                <label>Application name:</label>\n" +
-    "                                <input class=\"input-block-level\"\n" +
-    "                                       type=\"text\"\n" +
-    "                                       required\n" +
-    "                                       data-ng-model=\"newApplicationName\"\n" +
-    "                                       data-ng-change=\"newApplicationNameChange()\" />\n" +
-    "                                <button class=\"btn btn-primary btn-block\" data-ng-click=\"createApplication()\" data-ng-disabled=\"!newApplicationNameValid\">\n" +
-    "                                    <i class=\"self-icon-ok\"></i>\n" +
-    "                                    <span>Create</span>\n" +
-    "                                </button>\n" +
-    "                            </div>\n" +
-    "                        </li>\n" +
-    "                    </ul>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
-    "        </div>\n" +
-    "        <div class=\"span9\" ng-show=\"currentApp\">\n" +
+    "    <legend><i class=\"self-icon-cog-alt\"></i><span class=\"indent6\">Applications</span></legend>\r" +
     "\n" +
-    "            <div data-tabs=\"\">\n" +
+    "    <div class=\"row-fluid\">\r" +
     "\n" +
-    "                <div data-pane title=\"Common\">\n" +
-    "                    <label>Path</label>\n" +
-    "                    <input type=\"text\" data-ng-model=\"currentApp.path\" /> <br />\n" +
-    "                    <label class=\"checkbox\">\n" +
-    "                        <input type=\"checkbox\" data-ng-model=\"currentApp.startProcess\" /> (startProcess) Run an application.\n" +
-    "                    </label>\n" +
-    "                </div>\n" +
-    "                <div data-pane title=\"Monitoring\">\n" +
-    "                    <h5>\n" +
-    "                        See <a href=\"https://github.com/nodejitsu/forever-monitor#options-available-when-using-forever-in-nodejs\" target=\"_blank\">forever-monitor</a> for details\n" +
-    "                    </h5>\n" +
-    "                    <div data-tabs=\"\">\n" +
-    "                        <div data-pane title=\"Basic configuration options\">\n" +
-    "                            <label class=\"checkbox\">\n" +
-    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.silent\"> (silent) Silences the output from stdout and stderr in the parent process\n" +
-    "                            </label>\n" +
-    "                            <label>(uid) Custom uid for this forever process. (default: autogen)</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.uid\">\n" +
-    "                            <label>(pidFile) Path to put pid information for the process(es) started</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.pidFile\" placeholder=\"path/to/a.pid\">\n" +
-    "                            <label>(max) Sets the maximum number of times a given script should run</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.max\"> <br />\n" +
-    "                            <label class=\"checkbox\">\n" +
-    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.killTree\" value=\"1\"> (killTree) Kills the entire child process tree on `exit`\n" +
-    "                            </label>\n" +
-    "                        </div>\n" +
+    "\r" +
     "\n" +
-    "                        <div data-pane title=\"Restart\">\n" +
-    "                            <h5>These options control how quickly forever restarts a child process as well as when to kill a \"spinning\" process </h5>\n" +
+    "        <div class=\"span3\">\r" +
     "\n" +
-    "                            <label>(minUptime) Minimum time a child process has to be up. Forever will 'exit' otherwise.</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.minUptime\" placeholder=\"2000\">\n" +
-    "                            <label>(spinSleepTime) Interval between restarts if a child is spinning (i.e. alive < minUptime).</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.spinSleepTime\" placeholder=\"1000\">\n" +
-    "                        </div>\n" +
+    "            <div class=\"well\">\r" +
     "\n" +
-    "                        <div data-pane title=\"Spawn process\">\n" +
-    "                            <h5>Command to spawn as well as options and other vars (env, cwd, etc) to pass along</h5>\n" +
+    "                <div class=\"nav\">\r" +
     "\n" +
-    "                            <label>(command) Binary to run (default: 'node')</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.command\" placeholder=\"node\" />\n" +
+    "                    <ul class=\"nav nav-list\">\r" +
     "\n" +
-    "                            <label>(options) Additional arguments to pass to the script</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.options\" placeholder=\"foo bar\" />\n" +
+    "                        <li class=\"divider\"></li>\r" +
     "\n" +
-    "                            <label>(sourceDir) Directory that the source script is in</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.sourceDir\" placeholder=\"script/path\" />\n" +
-    "                        </div>\n" +
+    "                        <li ng-repeat=\"(name, properties) in applications\" ng-class=\"currentAppName == name ? 'active' : ''\">\r" +
     "\n" +
-    "                        <div data-pane title=\"Watch\">\n" +
-    "                            <h5>Options for restarting on watched files.</h5>\n" +
-    "                            <label class=\"checkbox\">\n" +
-    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.watch\" /> (watch) Value indicating if we should watch files.\n" +
-    "                            </label>\n" +
+    "                            <a href=\"\" ng-click=\"selectApplication(name)\">\r" +
     "\n" +
-    "                            <label>Dot files we should read to ignore ('.foreverignore', etc).</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.watchIgnoreDotFiles\" placeholder=\"null\" />\n" +
+    "                                <i class=\"self-icon-cog-alt\">  </i>\r" +
     "\n" +
-    "                            <label>Ignore patterns to use when watching files.</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.watchIgnorePatterns\" placeholder=\"null\" />\n" +
+    "                                {{name}}\r" +
     "\n" +
-    "                            <label>Top-level directory to watch from.</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.watchDirectory\" placeholder=\"null\" />\n" +
-    "                        </div>\n" +
+    "                                <i data-ng-show=\"currentAppName == name\"\r" +
     "\n" +
-    "                        <div data-pane title=\"Spawn options\">\n" +
-    "                            <h5>All or nothing options passed along to `child_process.spawn`.</h5>\n" +
+    "                                   data-ng-click=\"removeApplication(name)\"\r" +
     "\n" +
-    "                            <label>(spawnWith.customFds) that forever spawns.</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.spawnWith.customFds\" placeholder=\"-1, -1, -1\" /> <br />\n" +
-    "                            \n" +
-    "                            <label class=\"checkbox\">\n" +
-    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.spawnWith.setsid\" /> (spawnWith.setsid)\n" +
-    "                            </label>\n" +
+    "                                   class=\"self-icon-cancel pull-right\"\r" +
     "\n" +
-    "                            <h5>More specific options to pass along to `child_process.spawn` which will override anything passed to the `spawnWith` option</h5>\n" +
+    "                                   title=\"remove application\">\r" +
     "\n" +
-    "                            <label>(cwd) current working directory</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.cwd\" placeholder=\"/path/to/child/working/directory\" />\n" +
+    "                                </i>\r" +
     "\n" +
-    "                            <h5>Environment Variables passed to the application</h5>\n" +
+    "                            </a>\r" +
     "\n" +
-    "                            <label>process.env attributes in JSON Format</label>\n" +
-    "                            <textarea json ng-model=\"currentApp.foreverConfig.env\" rows=\"8\"></textarea>\n" +
+    "                        </li>\r" +
     "\n" +
-    "                        </div>\n" +
-    "                        <div data-pane title=\"Log files\">\n" +
-    "                            <h5>Log files and associated logging options for this instance</h5>\n" +
+    "                        <li class=\"divider\"></li>\r" +
     "\n" +
-    "                            <label>(logFile) Path to log output from forever process (when daemonized)</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.logFile\" placeholder=\"path/to/file\" />\n" +
+    "                        <li>\r" +
     "\n" +
-    "                            <label>(outFile) Path to log output from child stdout</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.outFile\" placeholder=\"path/to/file\" />\n" +
+    "                            <button class=\"btn btn-block\" data-ng-click=\"showNewApplication = !showNewApplication\">\r" +
     "\n" +
-    "                            <label>(errFile) Path to log output from child stderr</label>\n" +
-    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.errFile\" placeholder=\"path/to/file\" />\n" +
+    "                                <i class=\"self-icon-doc-new\"></i>\r" +
     "\n" +
-    "                        </div>\n" +
-    "                    </div>\n" +
-    "                </div>\n" +
-    "            </div>\n" +
+    "                                <span>Create application</span>\r" +
     "\n" +
-    "            <button class=\"btn btn-primary pull-right\" data-ng-click=\"saveSettings()\">\n" +
-    "                <i class=\"self-icon-ok\"></i>\n" +
-    "                <span>Apply settings</span>\n" +
-    "            </button>\n" +
-    "        </div>\n" +
+    "                            </button>\r" +
     "\n" +
-    "    </div>\n" +
-    "</fieldset>\n"
+    "                            <div data-ng-show=\"showNewApplication\">\r" +
+    "\n" +
+    "                                <label>Application name:</label>\r" +
+    "\n" +
+    "                                <input class=\"input-block-level\"\r" +
+    "\n" +
+    "                                       type=\"text\"\r" +
+    "\n" +
+    "                                       required\r" +
+    "\n" +
+    "                                       data-ng-model=\"newApplicationName\"\r" +
+    "\n" +
+    "                                       data-ng-change=\"newApplicationNameChange()\" />\r" +
+    "\n" +
+    "                                <button class=\"btn btn-primary btn-block\" data-ng-click=\"createApplication()\" data-ng-disabled=\"!newApplicationNameValid\">\r" +
+    "\n" +
+    "                                    <i class=\"self-icon-ok\"></i>\r" +
+    "\n" +
+    "                                    <span>Create</span>\r" +
+    "\n" +
+    "                                </button>\r" +
+    "\n" +
+    "                            </div>\r" +
+    "\n" +
+    "                        </li>\r" +
+    "\n" +
+    "                    </ul>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "        <div class=\"span9\" ng-show=\"currentApp\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "            <div data-tabs=\"\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <div data-pane title=\"Common\">\r" +
+    "\n" +
+    "                    <label>Path</label>\r" +
+    "\n" +
+    "                    <input type=\"text\" data-ng-model=\"currentApp.path\" /> <br />\r" +
+    "\n" +
+    "                    <label class=\"checkbox\">\r" +
+    "\n" +
+    "                        <input type=\"checkbox\" data-ng-model=\"currentApp.startProcess\" /> (startProcess) Run an application.\r" +
+    "\n" +
+    "                    </label>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "                <div data-pane title=\"Monitoring\">\r" +
+    "\n" +
+    "                    <h5>\r" +
+    "\n" +
+    "                        See <a href=\"https://github.com/nodejitsu/forever-monitor#options-available-when-using-forever-in-nodejs\" target=\"_blank\">forever-monitor</a> for details\r" +
+    "\n" +
+    "                    </h5>\r" +
+    "\n" +
+    "                    <div data-tabs=\"\">\r" +
+    "\n" +
+    "                        <div data-pane title=\"Basic configuration options\">\r" +
+    "\n" +
+    "                            <label class=\"checkbox\">\r" +
+    "\n" +
+    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.silent\"> (silent) Silences the output from stdout and stderr in the parent process\r" +
+    "\n" +
+    "                            </label>\r" +
+    "\n" +
+    "                            <label>(uid) Custom uid for this forever process. (default: autogen)</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.uid\">\r" +
+    "\n" +
+    "                            <label>(pidFile) Path to put pid information for the process(es) started</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.pidFile\" placeholder=\"path/to/a.pid\">\r" +
+    "\n" +
+    "                            <label>(max) Sets the maximum number of times a given script should run</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.max\"> <br />\r" +
+    "\n" +
+    "                            <label class=\"checkbox\">\r" +
+    "\n" +
+    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.killTree\" value=\"1\"> (killTree) Kills the entire child process tree on `exit`\r" +
+    "\n" +
+    "                            </label>\r" +
+    "\n" +
+    "                        </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                        <div data-pane title=\"Restart\">\r" +
+    "\n" +
+    "                            <h5>These options control how quickly forever restarts a child process as well as when to kill a \"spinning\" process </h5>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>(minUptime) Minimum time a child process has to be up. Forever will 'exit' otherwise.</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.minUptime\" placeholder=\"2000\">\r" +
+    "\n" +
+    "                            <label>(spinSleepTime) Interval between restarts if a child is spinning (i.e. alive < minUptime).</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.spinSleepTime\" placeholder=\"1000\">\r" +
+    "\n" +
+    "                        </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                        <div data-pane title=\"Spawn process\">\r" +
+    "\n" +
+    "                            <h5>Command to spawn as well as options and other vars (env, cwd, etc) to pass along</h5>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>(command) Binary to run (default: 'node')</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.command\" placeholder=\"node\" />\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>(options) Additional arguments to pass to the script</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.options\" placeholder=\"foo bar\" />\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>(sourceDir) Directory that the source script is in</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.sourceDir\" placeholder=\"script/path\" />\r" +
+    "\n" +
+    "                        </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                        <div data-pane title=\"Watch\">\r" +
+    "\n" +
+    "                            <h5>Options for restarting on watched files.</h5>\r" +
+    "\n" +
+    "                            <label class=\"checkbox\">\r" +
+    "\n" +
+    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.watch\" /> (watch) Value indicating if we should watch files.\r" +
+    "\n" +
+    "                            </label>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>Dot files we should read to ignore ('.foreverignore', etc).</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.watchIgnoreDotFiles\" placeholder=\"null\" />\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>Ignore patterns to use when watching files.</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.watchIgnorePatterns\" placeholder=\"null\" />\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>Top-level directory to watch from.</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.watchDirectory\" placeholder=\"null\" />\r" +
+    "\n" +
+    "                        </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                        <div data-pane title=\"Spawn options\">\r" +
+    "\n" +
+    "                            <h5>All or nothing options passed along to `child_process.spawn`.</h5>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>(spawnWith.customFds) that forever spawns.</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.spawnWith.customFds\" placeholder=\"-1, -1, -1\" /> <br />\r" +
+    "\n" +
+    "                            \r" +
+    "\n" +
+    "                            <label class=\"checkbox\">\r" +
+    "\n" +
+    "                                <input type=\"checkbox\" ng-model=\"currentApp.foreverConfig.spawnWith.setsid\" /> (spawnWith.setsid)\r" +
+    "\n" +
+    "                            </label>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <h5>More specific options to pass along to `child_process.spawn` which will override anything passed to the `spawnWith` option</h5>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>(cwd) current working directory</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.cwd\" placeholder=\"/path/to/child/working/directory\" />\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <h5>Environment Variables passed to the application</h5>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>process.env attributes in JSON Format</label>\r" +
+    "\n" +
+    "                            <textarea json ng-model=\"currentApp.foreverConfig.env\" rows=\"8\"></textarea>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                        </div>\r" +
+    "\n" +
+    "                        <div data-pane title=\"Log files\">\r" +
+    "\n" +
+    "                            <h5>Log files and associated logging options for this instance</h5>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>(logFile) Path to log output from forever process (when daemonized)</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.logFile\" placeholder=\"path/to/file\" />\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>(outFile) Path to log output from child stdout</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.outFile\" placeholder=\"path/to/file\" />\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                            <label>(errFile) Path to log output from child stderr</label>\r" +
+    "\n" +
+    "                            <input type=\"text\" ng-model=\"currentApp.foreverConfig.errFile\" placeholder=\"path/to/file\" />\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                        </div>\r" +
+    "\n" +
+    "                    </div>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "            <button class=\"btn btn-primary pull-right\" data-ng-click=\"saveSettings()\">\r" +
+    "\n" +
+    "                <i class=\"self-icon-ok\"></i>\r" +
+    "\n" +
+    "                <span>Apply settings</span>\r" +
+    "\n" +
+    "            </button>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</fieldset>\r" +
+    "\n"
   );
 
 
   $templateCache.put('template/deploy.html',
-    "<fieldset>\n" +
-    "    <legend><i class=\"self-icon-fork\"></i><span class=\"indent6\">Deploy instructions</span></legend>\n" +
-    "    <div class=\"row-fluid\">\n" +
+    "<fieldset>\r" +
     "\n" +
-    "        <div class=\"span9\">\n" +
-    "            <p>\n" +
-    "                To deploy application you are must use client-side tool.<br/>\n" +
-    "                See full version in <a href=\"https://github.com/AndyGrom/node-deploy-client\" target=\"_blank\">github</a>\n" +
-    "            </p>\n" +
-    "            <hr/>\n" +
+    "    <legend><i class=\"self-icon-fork\"></i><span class=\"indent6\">Deploy instructions</span></legend>\r" +
     "\n" +
-    "            <h1>The Node.js deploy client</h1>\n" +
-    "            Node.js command-line tool is designed to help you deploy your node.js application<br/>\n" +
+    "    <div class=\"row-fluid\">\r" +
     "\n" +
-    "            <h3>Usages</h3>\n" +
+    "\r" +
     "\n" +
-    "            <ol>\n" +
-    "                <li>Install tool<br/>\n" +
-    "        <pre>\n" +
-    "npm install node-deploy-client -g</pre>\n" +
+    "        <div class=\"span9\">\r" +
     "\n" +
-    "                </li>\n" +
+    "            <p>\r" +
     "\n" +
-    "                <li>Configuration <br/>\n" +
-    "                    Create into root folder your project \".deploy\" file with next content:\n" +
-    "        <pre>\n" +
-    "{\n" +
-    "    \"development\" : {                                   // configuration name\n" +
-    "        \"url\" : \"http://admin:admin@localhost:15478\"    // deploy server url\n" +
-    "    },\n" +
-    "    \"staging\" : {                                       // other configuration name\n" +
-    "        \"url\" : \"http://admin:admin@192.168.1.3:15478\"  // other deploy server url\n" +
-    "    }\n" +
-    "}</pre>\n" +
+    "                To deploy application you are must use client-side tool.<br/>\r" +
     "\n" +
-    "                    into your package.json file fill next fields\n" +
-    "        <pre>\n" +
-    "{\n" +
-    "    \"name\" : \"name of application\", // name must correlate with server-side application name\n" +
-    "    \"main\" : \"server.js\"            // main script what will performing after deploying\n" +
-    "}</pre>\n" +
+    "                See full version in <a href=\"https://github.com/AndyGrom/node-deploy-client\" target=\"_blank\">github</a>\r" +
     "\n" +
-    "                </li>\n" +
-    "                <li>Run tool into root folder your project\n" +
-    "        <pre>\n" +
-    "deploy &lt;configuration name&gt;</pre>\n" +
+    "            </p>\r" +
     "\n" +
-    "                </li>\n" +
-    "            </ol>\n" +
+    "            <hr/>\r" +
     "\n" +
-    "        </div>\n" +
-    "    </div>\n" +
+    "\r" +
+    "\n" +
+    "            <h1>The Node.js deploy client</h1>\r" +
+    "\n" +
+    "            Node.js command-line tool is designed to help you deploy your node.js application<br/>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "            <h3>Usages</h3>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "            <ol>\r" +
+    "\n" +
+    "                <li>Install tool<br/>\r" +
+    "\n" +
+    "        <pre>\r" +
+    "\n" +
+    "npm install node-deploy-client -g</pre>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                </li>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <li>Configuration <br/>\r" +
+    "\n" +
+    "                    Create into root folder your project \".deploy\" file with next content:\r" +
+    "\n" +
+    "        <pre>\r" +
+    "\n" +
+    "{\r" +
+    "\n" +
+    "    \"development\" : {                                   // configuration name\r" +
+    "\n" +
+    "        \"url\" : \"http://admin:admin@localhost:15478\"    // deploy server url\r" +
+    "\n" +
+    "    },\r" +
+    "\n" +
+    "    \"staging\" : {                                       // other configuration name\r" +
+    "\n" +
+    "        \"url\" : \"http://admin:admin@192.168.1.3:15478\"  // other deploy server url\r" +
+    "\n" +
+    "    }\r" +
+    "\n" +
+    "}</pre>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                    into your package.json file fill next fields\r" +
+    "\n" +
+    "        <pre>\r" +
+    "\n" +
+    "{\r" +
+    "\n" +
+    "    \"name\" : \"name of application\", // name must correlate with server-side application name\r" +
+    "\n" +
+    "    \"main\" : \"server.js\"            // main script what will performing after deploying\r" +
+    "\n" +
+    "}</pre>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                </li>\r" +
+    "\n" +
+    "                <li>Run tool into root folder your project\r" +
+    "\n" +
+    "        <pre>\r" +
+    "\n" +
+    "deploy &lt;configuration name&gt;</pre>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                </li>\r" +
+    "\n" +
+    "            </ol>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
     "</fieldset>"
   );
 
 
   $templateCache.put('template/pane.html',
-    "<div class=\"tab-pane\" ng-show=\"selected\" ng-transclude>\n" +
+    "<div class=\"tab-pane\" ng-show=\"selected\" ng-transclude>\r" +
+    "\n" +
     "</div>"
   );
 
 
   $templateCache.put('template/server.html',
-    "<fieldset>\n" +
-    "    <legend><i class=\"self-icon-cog\"></i><span class=\"indent6\">Server settings</span></legend>\n" +
+    "<fieldset>\r" +
     "\n" +
-    "    <div class=\"row-fluid\">\n" +
-    "        <div class=\"span7\">\n" +
-    "            <div data-tabs=\"\">\n" +
+    "    <legend><i class=\"self-icon-cog\"></i><span class=\"indent6\">Server settings</span></legend>\r" +
     "\n" +
-    "                <div data-pane title=\"Common\">\n" +
-    "                    <label>TCP port:</label>\n" +
-    "                    <input type=\"number\" data-ng-model=\"settings.port\" /> <br />\n" +
-    "                    <label>Username:</label>\n" +
-    "                    <input type=\"text\" data-ng-model=\"settings.username\" /> <br />\n" +
-    "                    <label>Password:</label>\n" +
-    "                    <input type=\"password\" data-ng-model=\"settings.password\" /> <br />\n" +
-    "                    <hr/>\n" +
-    "                    <label class=\"checkbox\">\n" +
-    "                        <input type=\"checkbox\" data-ng-model=\"settings.autoCreateApplication\" /> Auto create deployed application\n" +
-    "                    </label>\n" +
-    "                    <label>Default folder for auto created applications</label>\n" +
-    "                    <input type=\"text\" data-ng-model=\"settings.defaultApplicationPath\" /><br />\n" +
+    "\r" +
     "\n" +
-    "</div>\n" +
-    "                <div data-pane title=\"SSL\">\n" +
-    "                    <input type=\"checkbox\" data-ng-model=\"settings.ssl\"/> SSL support\n" +
-    "                    <label>Key\n" +
-    "                        <textarea rows=\"6\" spellcheck=\"false\"\n" +
-    "                                  class=\"input-block-level monospace\"\n" +
-    "                                  data-ng-change=\"keyOnChange()\"\n" +
-    "                                  data-ng-model=\"settings.key\"></textarea>\n" +
-    "                        \n" +
-    "                    </label>\n" +
-    "                    <label>\n" +
-    "                        Certificate\n" +
-    "                        <textarea rows=\"6\" spellcheck=\"false\"\n" +
-    "                                  class=\"input-block-level monospace\"\n" +
-    "                                  data-ng-change=\"keyOnChange()\"\n" +
-    "                                  data-ng-model=\"settings.cert\"></textarea>\n" +
-    "                    </label>\n" +
-    "                </div>\n" +
+    "    <div class=\"row-fluid\">\r" +
     "\n" +
-    "            </div>\n" +
-    "            <button class=\"btn btn-primary pull-right\" data-ng-click=\"saveSettings()\">\n" +
-    "                <i class=\"self-icon-ok\"></i>\n" +
-    "                <span>Apply settings</span>\n" +
-    "            </button>\n" +
-    "        </div>\n" +
-    "    </div>\n" +
-    "</fieldset>\n"
+    "        <div class=\"span7\">\r" +
+    "\n" +
+    "            <div data-tabs=\"\">\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "                <div data-pane title=\"Common\">\r" +
+    "\n" +
+    "                    <label>TCP port:</label>\r" +
+    "\n" +
+    "                    <input type=\"number\" data-ng-model=\"settings.port\" /> <br />\r" +
+    "\n" +
+    "                    <label>Username:</label>\r" +
+    "\n" +
+    "                    <input type=\"text\" data-ng-model=\"settings.username\" /> <br />\r" +
+    "\n" +
+    "                    <label>Password:</label>\r" +
+    "\n" +
+    "                    <input type=\"password\" data-ng-model=\"settings.password\" /> <br />\r" +
+    "\n" +
+    "                    <hr/>\r" +
+    "\n" +
+    "                    <label class=\"checkbox\">\r" +
+    "\n" +
+    "                        <input type=\"checkbox\" data-ng-model=\"settings.autoCreateApplication\" /> Auto create deployed application\r" +
+    "\n" +
+    "                    </label>\r" +
+    "\n" +
+    "                    <label>Default folder for auto created applications</label>\r" +
+    "\n" +
+    "                    <input type=\"text\" data-ng-model=\"settings.defaultApplicationPath\" /><br />\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "</div>\r" +
+    "\n" +
+    "                <div data-pane title=\"SSL\">\r" +
+    "\n" +
+    "                    <input type=\"checkbox\" data-ng-model=\"settings.ssl\"/> SSL support\r" +
+    "\n" +
+    "                    <label>Key\r" +
+    "\n" +
+    "                        <textarea rows=\"6\" spellcheck=\"false\"\r" +
+    "\n" +
+    "                                  class=\"input-block-level monospace\"\r" +
+    "\n" +
+    "                                  data-ng-change=\"keyOnChange()\"\r" +
+    "\n" +
+    "                                  data-ng-model=\"settings.key\"></textarea>\r" +
+    "\n" +
+    "                        \r" +
+    "\n" +
+    "                    </label>\r" +
+    "\n" +
+    "                    <label>\r" +
+    "\n" +
+    "                        Certificate\r" +
+    "\n" +
+    "                        <textarea rows=\"6\" spellcheck=\"false\"\r" +
+    "\n" +
+    "                                  class=\"input-block-level monospace\"\r" +
+    "\n" +
+    "                                  data-ng-change=\"keyOnChange()\"\r" +
+    "\n" +
+    "                                  data-ng-model=\"settings.cert\"></textarea>\r" +
+    "\n" +
+    "                    </label>\r" +
+    "\n" +
+    "                </div>\r" +
+    "\n" +
+    "\r" +
+    "\n" +
+    "            </div>\r" +
+    "\n" +
+    "            <button class=\"btn btn-primary pull-right\" data-ng-click=\"saveSettings()\">\r" +
+    "\n" +
+    "                <i class=\"self-icon-ok\"></i>\r" +
+    "\n" +
+    "                <span>Apply settings</span>\r" +
+    "\n" +
+    "            </button>\r" +
+    "\n" +
+    "        </div>\r" +
+    "\n" +
+    "    </div>\r" +
+    "\n" +
+    "</fieldset>\r" +
+    "\n"
   );
 
 
   $templateCache.put('template/tabs.html',
-    "<div class=\"tabbable\">\n" +
-    "  <ul class=\"nav nav-tabs\">\n" +
-    "    <li ng-repeat=\"pane in panes\" ng-class=\"{active:pane.selected}\">\n" +
-    "      <a href=\"javascript:void(0)\" ng-click=\"select(pane)\">{{pane.title}}</a>\n" +
-    "    </li>\n" +
-    "  </ul>\n" +
-    "  <div class=\"tab-content\" ng-transclude></div>\n" +
+    "<div class=\"tabbable\">\r" +
+    "\n" +
+    "  <ul class=\"nav nav-tabs\">\r" +
+    "\n" +
+    "    <li ng-repeat=\"pane in panes\" ng-class=\"{active:pane.selected}\">\r" +
+    "\n" +
+    "      <a href=\"javascript:void(0)\" ng-click=\"select(pane)\">{{pane.title}}</a>\r" +
+    "\n" +
+    "    </li>\r" +
+    "\n" +
+    "  </ul>\r" +
+    "\n" +
+    "  <div class=\"tab-content\" ng-transclude></div>\r" +
+    "\n" +
     "</div>"
   );
 
