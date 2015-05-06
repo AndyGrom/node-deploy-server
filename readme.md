@@ -1,7 +1,7 @@
 The Node.js deploy server
 =========================
 Node.js service is designed to help you deploy and manage your node.js web services. 
-Client tool for deployment located in [node-deploy-client](https://github.com/AndyGrom/node-deploy-server/client)
+Client tool for deployment located in [node-deploy-client](https://github.com/AndyGrom/node-deploy-server/tree/master/client)
 
 Features
 --------
