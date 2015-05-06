@@ -1,0 +1,23 @@
+{
+    "name": "node-deploy-client",
+    "version": "0.2.1",
+    "author": "Gromozdov Andrey Alexandrovich",
+    "main": "lib/node-deploy-client.js",
+    "bin": {
+        "deploy": "./bin/deploy"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/andygrom/node-deploy-server.git"
+    },
+    "dependencies": {
+        "optimist": "*",
+        "tmp": "*",
+        "fstream": "*",
+        "tar": "*",
+        "prompt": "*"
+    },
+    "keywords": [
+        "deploy"
+    ]
+}
