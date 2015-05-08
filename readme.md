@@ -40,7 +40,7 @@ Usages
 	service nodehosting start
 	```
 
-Service ready. To deploy application use [node-deploy client side](https://github.com/AndyGrom/node-deploy-client).
+Service ready. To deploy application use [node-deploy client side](https://github.com/AndyGrom/node-deploy-server/tree/master/client).
 For managing a service locate your browser to http://hostname:15478/ .
 Default credentials is admin/admin. Do not forget to change their.
 
