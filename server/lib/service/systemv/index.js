@@ -38,6 +38,8 @@ Service.prototype.install = function(){
         if (err){
             throw new Error(err);
         }
+
+        data = data.replace(new RegExp('\x0d', 'g'), '');
         fs.writeFile(initdScript, data, {mode: 0755}, function(err){
             if (err) {
                 throw new Error(err);
