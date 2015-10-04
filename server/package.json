@@ -1,7 +1,7 @@
 {
   "name": "node-deploy-server",
   "description": "Web service for deploy and run node.js applications",
-  "version": "0.2.0",
+  "version": "0.2.3",
   "author": "Gromozdov Andrey Alexandrovich",
   "main": "../lib/server",
   "repository": {
@@ -22,18 +22,19 @@
     "windows"
   ],
   "dependencies": {
-    "express": "~3.4.4",
-    "tar": "~0.1.18",
-    "tmp": "~0.0.21",
-    "fstream": "~0.1.25",
-    "forever-monitor": "*",
-    "passport": "~0.1.17",
     "colors": "*",
-    "optimist": "*",
     "ejs": "*",
+    "express": "~3.4.4",
+    "forever-monitor": "*",
+    "fstream": "~0.1.25",
     "mkdirp": "*",
+    "optimist": "*",
+    "passport": "~0.1.17",
+    "passport-local": "~0.1.6",
+    "proxyquire": "^1.3.2",
     "rimraf": "*",
-    "passport-local": "~0.1.6"
+    "tar": "~0.1.18",
+    "tmp": "~0.0.21"
   },
   "engines": {
     "node": ">= 0.10.0"
