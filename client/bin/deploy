@@ -1,1 +1,3 @@
-#!/usr/bin/env noderequire('../lib/node-deploy-client');
+#!/usr/bin/env node
+
+require('../lib/node-deploy-client');
